@@ -10,22 +10,20 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import UserService from "../services/Users"
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
-import MenuItem from '@mui/material/MenuItem';
+import FormLabel from '@mui/material/FormLabel';
 
 const theme = createTheme();
 function validate(FirstName, LastName, Username, Email, Age, ContactNumber, password) {
   // true means invalid, so our conditions got reversed
-  console.log("Age", Age, Age > 0)
   return {
     Email: Email.length === 0,
     password: password.length === 0,
-    FirstName: FirstName.length === 0,
-    LastName: LastName.length === 0,
-    Age: Age <= 0,
     Username: Username.length === 0,
-    ContactNumber: ContactNumber.length === 0
+    role : role.length === 0
   };
 }
 const Notification = ({ message }) => {
@@ -45,29 +43,23 @@ const Notification = ({ message }) => {
 export default function Register(props) {
   const [errorMessage, setErrorMessage] = React.useState(null)
   const [FormValues, setFormValues] = React.useState({
-    FirstName: "",
-    LastName: "",
     Username: "",
     Email: "",
-    Age: "",
-    ContactNumber: "",
+    role:"speculator",
     password: ""
   })
   const [touched, settouched] = React.useState({
-    FirstName: false,
-    LastName: false,
     Username: false,
     Email: false,
-    Age: false,
-    ContactNumber: false,
+    role:true,
     password: false
   })
   function canBeSubmitted() {
-    const errors = validate(touched.FirstName, touched.LastName, touched.Username, touched.Email, touched.Age, touched.ContactNumber, touched.password);
+    const errors = validate(touched.Username, touched.Email,touched.role,touched.password);
     const isDisabled = Object.keys(errors).some(x => errors[x]);
     return !isDisabled;
   }
-  const errors = validate(FormValues.FirstName, FormValues.LastName, FormValues.Username, FormValues.Email, FormValues.Age, FormValues.ContactNumber, FormValues.password);
+  const errors = validate(FormValues.Username, FormValues.Email,FormValues.role,FormValues.password);
   console.log(errors)
   const isDisabled = Object.keys(errors).some(x => errors[x]);
   const shouldMarkError = field => {
@@ -80,12 +72,9 @@ export default function Register(props) {
     event.preventDefault()
     if (!canBeSubmitted()) {
       setFormValues({
-        FirstName: "",
-        LastName: "",
         Username: "",
         Email: "",
-        Age: "",
-        ContactNumber: "",
+        role:"speculator",
         password: "",
       })
       setErrorMessage(
@@ -103,12 +92,9 @@ export default function Register(props) {
           console.log(FormValues)
           console.log("recieved", data)
           setFormValues({
-            FirstName: "",
-            LastName: "",
             Username: "",
             Email: "",
-            Age: "",
-            ContactNumber: "",
+            role:"speculator",
             password: ""
           })
         }
@@ -141,69 +127,6 @@ export default function Register(props) {
             <Notification message={errorMessage} />
             <Box component="form" onSubmit={handleSubmit} sx={{ mt: 3 }}>
               <Grid container spacing={2}>
-                <Grid item xs={12} sm={6}>
-                  {
-                    shouldMarkError("FirstName") ?
-                      <TextField
-                        error
-                        id="FirstName"
-                        helperText="Invalid entry"
-                        onBlur={event => settouched({ ...touched, FirstName: true })}
-                        autoComplete="given-name"
-                        name="firstName"
-                        required
-                        fullWidth
-                        label="FirstName"
-                        autoFocus
-                        variant="filled"
-                        value={FormValues.FirstName}
-                        onChange={event => setFormValues({ ...FormValues, FirstName: event.target.value })}
-                      />
-                      :
-                      <TextField
-                        autoComplete="given-name"
-                        name="firstName"
-                        required
-                        fullWidth
-                        id="firstName"
-                        label="FirstName"
-                        autoFocus
-                        value={FormValues.FirstName}
-                        onBlur={event => settouched({ ...touched, FirstName: true })}
-                        onChange={event => setFormValues({ ...FormValues, FirstName: event.target.value })}
-                      />
-                  }
-
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  {
-                    shouldMarkError("LastName") ?
-                      <TextField
-                        error
-                        id="LastName"
-                        helperText="Invalid entry"
-                        onBlur={event => settouched({ ...touched, LastName: true })}
-                        required
-                        fullWidth
-                        label="Last Name"
-                        name="lastName"
-                        variant="filled"
-                        value={FormValues.LastName}
-                        onChange={event => setFormValues({ ...FormValues, LastName: event.target.value })}
-                      />
-                      :
-                      <TextField
-                        required
-                        fullWidth
-                        id="lastName"
-                        label="Last Name"
-                        name="lastName"
-                        value={FormValues.LastName}
-                        onBlur={event => settouched({ ...touched, LastName: true })}
-                        onChange={event => setFormValues({ ...FormValues, LastName: event.target.value })}
-                      />
-                  }
-                </Grid>
                 <Grid item xs={12}>
                   {
                     shouldMarkError("Username") ?
@@ -234,45 +157,13 @@ export default function Register(props) {
                   }
                 </Grid>
                 <Grid item xs={12} sm={6}>
-                  <FormControl fullWidth>
-                    <InputLabel id="demo-simple-select-label">Role</InputLabel>
-                    <Select
-                      labelId="demo-simple-select-label"
-                      id="demo-simple-select"
-                      value={age}
-                      label="Role"
-                      onChange={handleChange}
-                    >
-                      <MenuItem value={"Member"}>Member</MenuItem>
-                      <MenuItem value={"Speculator"}>Speculator</MenuItem>
-                    </Select>
+                  <FormControl component="fieldset">
+                  <FormLabel id="demo-controlled-radio-buttons-group">Role</FormLabel>
+                    <RadioGroup aria-label="role" name="role" value={role} onChange={handleRoleChange}>
+                      <FormControlLabel value="speculator" control={<Radio />} label="Speculator" />
+                      <FormControlLabel value="member" control={<Radio />} label="Member" />
+                    </RadioGroup>
                   </FormControl>
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  {
-                    shouldMarkError("ContactNumber") ?
-                      <TextField
-                        variant="filled"
-                        error
-                        id="ContactNumber"
-                        helperText="Invalid entry"
-                        onBlur={event => settouched({ ...touched, ContactNumber: true })}
-                        value={FormValues.ContactNumber}
-                        required
-                        placeholder="Contact Number"
-                        name="Contact Number"
-                        onChange={event => setFormValues({ ...FormValues, ContactNumber: event.target.value })}
-                      />
-                      :
-                      <TextField
-                        value={FormValues.ContactNumber}
-                        required
-                        placeholder="Contact Number"
-                        name="Contact Number"
-                        onBlur={event => settouched({ ...touched, ContactNumber: true })}
-                        onChange={event => setFormValues({ ...FormValues, ContactNumber: event.target.value })}
-                      />
-                  }
                 </Grid>
                 <Grid item xs={12}>
                   {
