@@ -10,10 +10,14 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import UserService from "../services/Users"
+import FormControl from '@mui/material/FormControl';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
+
 const theme = createTheme();
 function validate(FirstName, LastName, Username, Email, Age, ContactNumber, password) {
   // true means invalid, so our conditions got reversed
-  console.log("Age",Age,Age > 0)
+  console.log("Age", Age, Age > 0)
   return {
     Email: Email.length === 0,
     password: password.length === 0,
@@ -74,7 +78,6 @@ export default function Register(props) {
   function handleSubmit(event) {
     console.log(FormValues)
     event.preventDefault()
-    // if (!FormValues.FirstName || !FormValues.LastName || !FormValues.Username || !FormValues.Email || (FormValues.Age <= 0) || (!FormValues.ContactNumber) || (!FormValues.password)) {
     if (!canBeSubmitted()) {
       setFormValues({
         FirstName: "",
@@ -231,37 +234,19 @@ export default function Register(props) {
                   }
                 </Grid>
                 <Grid item xs={12} sm={6}>
-                  {
-                    shouldMarkError("Age") ?
-                      <TextField
-                        error
-                        id="Age"
-                        helperText="Invalid entry"
-                        onBlur={event => settouched({ ...touched, Age: true })}
-                        required
-                        label="Age"
-                        type="number"
-                        variant="filled"
-                        InputLabelProps={{
-                          shrink: true,
-                        }}
-                        value={FormValues.Age}
-                        onChange={event => setFormValues({ ...FormValues, Age: event.target.value })}
-                      />
-                      :
-                      <TextField
-                        id="outlined-number"
-                        required
-                        label="Age"
-                        type="number"
-                        InputLabelProps={{
-                          shrink: true,
-                        }}
-                        value={FormValues.Age}
-                        onBlur={event => settouched({ ...touched, Age: true })}
-                        onChange={event => setFormValues({ ...FormValues, Age: event.target.value })}
-                      />
-                  }
+                  <FormControl fullWidth>
+                    <InputLabel id="demo-simple-select-label">Role</InputLabel>
+                    <Select
+                      labelId="demo-simple-select-label"
+                      id="demo-simple-select"
+                      value={age}
+                      label="Role"
+                      onChange={handleChange}
+                    >
+                      <MenuItem value={"Member"}>Member</MenuItem>
+                      <MenuItem value={"Speculator"}>Speculator</MenuItem>
+                    </Select>
+                  </FormControl>
                 </Grid>
                 <Grid item xs={12} sm={6}>
                   {
