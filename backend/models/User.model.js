@@ -1,31 +1,15 @@
 const mongoose = require('mongoose')
 
 const userSchema = new mongoose.Schema({
-  FirstName:{type:String,required:true},
-  LastName:{type:String,required:true},
   Username: {type:String,required:true},
   Email:{type:String,required:true,unique:true},
-  Age:{type:Number,required:true},
-  ContactNumber:{type:String,required:true},
   passwordHash: {type:String,required:true},
-  Following: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'User'
-    }
-  ],
-  Followers: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'User'
-    }
-  ],
-  SavedPosts:[
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Posts'
-    }
-  ],
+  metamaskPK: {type:String},
+  metamaskWAddress: {type:String},
+  role: {type:String,required:true},
+  Kycverified : {type:Boolean},
+  CoinbaseVerified : {type:Boolean},
+  Coinbase_id: {type:String},
   creationdate:{type:Number}
 })
 

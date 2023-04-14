@@ -159,7 +159,7 @@ export default function Register(props) {
                 <Grid item xs={12} sm={6}>
                   <FormControl component="fieldset">
                   <FormLabel id="demo-controlled-radio-buttons-group">Role</FormLabel>
-                    <RadioGroup aria-label="role" name="role" value={role} onChange={handleRoleChange}>
+                    <RadioGroup aria-label="role" name="role" value={role} onChange={event => setFormValues({ ...FormValues, role: event.target.value })}>
                       <FormControlLabel value="speculator" control={<Radio />} label="Speculator" />
                       <FormControlLabel value="member" control={<Radio />} label="Member" />
                     </RadioGroup>

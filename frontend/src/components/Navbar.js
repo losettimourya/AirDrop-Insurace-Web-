@@ -24,14 +24,14 @@ export default function Home(props) {
                 <Toolbar>
                     {matches ? <RedditIcon style={{ fontSize: "2rem", marginRight: "1rem" }} /> : null}
                     <Typography align="left" variant="h4" component="div" sx={{ flexGrow: 1 }}>
-                        <Button color="inherit" href="/">Greddiit Portal</Button>
+                        <Button color="inherit" href="/">Airdrop Insurance</Button>
                     </Typography>
                     {props.user ?
                         <div>
                             <Button color="inherit" href="/profile"><AccountCircleIcon style={{ marginRight: "0.5rem" }} />Profile</Button>
-                            <Button color="inherit" href="/MySubGreddits"><AccountCircleIcon style={{ marginRight: "0.5rem" }} />MySubGreddits</Button>
-                            <Button color="inherit" href="/SubGreddits"><AccountCircleIcon style={{ marginRight: "0.5rem" }} />SubGreddits</Button>
-                            <Button color="inherit" href="/SavedPosts"><ExitToAppIcon style={{ marginRight: "0.5rem" }} />Saved posts</Button>
+                            <Button color="inherit" href="/Wallet"><AccountCircleIcon style={{ marginRight: "0.5rem" }} />Wallet</Button>
+                            <Button color="inherit" href="/BuyInsurance"><AccountCircleIcon style={{ marginRight: "0.5rem" }} />Buy Insurance</Button>
+                            <Button color="inherit" href="/ClaimInsurance"><ExitToAppIcon style={{ marginRight: "0.5rem" }} />Claim Insurance</Button>
                             <Button color="inherit" onClick={handleLogout}><ExitToAppIcon style={{ marginRight: "0.5rem" }} />Logout</Button>
                         </div>
                         :
