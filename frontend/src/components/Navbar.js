@@ -31,6 +31,7 @@ export default function Home(props) {
                             <Button color="inherit" href="/profile"><AccountCircleIcon style={{ marginRight: "0.5rem" }} />Profile</Button>
                             <Button color="inherit" href="/Wallet"><AccountCircleIcon style={{ marginRight: "0.5rem" }} />Wallet</Button>
                             <Button color="inherit" href="/BuyInsurance"><AccountCircleIcon style={{ marginRight: "0.5rem" }} />Buy Insurance</Button>
+                            <Button color="inherit" href="/CreateFlow"><AccountCircleIcon style={{ marginRight: "0.5rem" }} />Create Flow</Button>
                             <Button color="inherit" href="/ClaimInsurance"><ExitToAppIcon style={{ marginRight: "0.5rem" }} />Claim Insurance</Button>
                             <Button color="inherit" onClick={handleLogout}><ExitToAppIcon style={{ marginRight: "0.5rem" }} />Logout</Button>
                         </div>

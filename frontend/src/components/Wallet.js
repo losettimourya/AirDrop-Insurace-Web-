@@ -32,27 +32,31 @@ export default function Wallet(props) {
             getBalance();
         }
     }, [web3Provider, walletAddress]);
-
-
-
     async function query(functionName, args) {
-        const contract = new ethers.Contract(contractName, contractAbi, web3Provider);
-        const func = contract.functions[functionName];
-        const result = await func(...args);
+        const contract = new ethers.Contract(contractAddress, abi, provider);
+        const result = await contract[functionName](...args);
         return result;
     }
-
+    async function transaction(functionName, args) {
+        const contract = new ethers.Contract(contractAddress, abi, signer);
+        const result = await contract[functionName](...args);
+        await result.wait();
+        return result.hash;
+    }
+    async function getBalance(address) {
+        const contract = new ethers.Contract(contractAddress, abi, provider);
+        const balance = await contract.balanceOf(address);
+        return balance.toString();
+    }
     async function deposit(functionName, args) {
         const privateKey = new ethers.utils.HexString(loggedInUser.metamaskPK);
         const wallet = new ethers.Wallet(privateKey, web3Provider);
-
         const contract = new ethers.Contract(contractName, contractAbi, wallet);
         const func = contract.functions[functionName];
         const result = await func(...args);
 
         return result.hash;
     }
-
     async function connectMetamask() {
         if (window.ethereum) {
             try {
@@ -66,7 +70,6 @@ export default function Wallet(props) {
             console.error('Metamask not installed');
         }
     }
-
     async function handleSend() {
         const args = [walletAddress, amount];
         const result = await deposit('send', args);
