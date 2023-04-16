@@ -2,7 +2,7 @@ import React from "react"
 import "./App.css"
 import { useState, useEffect } from 'react';
 import { ethers } from 'ethers';
-
+import UserService from "../services/Users"
 export default function Wallet(props) {
 
     const [Amount, setAmount] = React.useState(0)
@@ -22,10 +22,19 @@ export default function Wallet(props) {
         setpasswordlogin(event.target.value)
     }
     useEffect(() => {
+        var userdata
+        const fetchData = async () => {
+            const data = UserService.getID()
+            userdata = data
+            setWalletAddress(userdata.metamaskWAddress)
+
+
+        }
+        fetchData();
         async function getBalance() {
             const provider = new ethers.providers.JsonRpcProvider('ethereum-client-url');
             const contract = new ethers.Contract(contractName, contractAbi, provider);
-            const balance = await contract.getBalance(walletAddress);
+            const balance = await contract.getBalance(userdata.metamaskWAddress);
             setBalance(balance);
         }
         if (web3Provider && walletAddress) {
@@ -54,7 +63,6 @@ export default function Wallet(props) {
         const contract = new ethers.Contract(contractName, contractAbi, wallet);
         const func = contract.functions[functionName];
         const result = await func(...args);
-
         return result.hash;
     }
     async function connectMetamask() {
@@ -81,6 +89,7 @@ export default function Wallet(props) {
             event.preventDefault()
             try {
                 // TODO: Write API request here
+
                 setAmount("")
                 setAddress("")
                 // TODO: Make sure everything is reight here
@@ -223,7 +232,4 @@ export default function Wallet(props) {
             </ThemeProvider>
         </div>
     )
-
-
-
 }

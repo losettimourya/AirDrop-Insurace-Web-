@@ -33,7 +33,7 @@ loginRouter.post('/', async (request, response) => {
   console.log({ token, Email: user.Email, id: user._id, ...user })
   response
     .status(200)
-    .send({ token, Email: user.Email, id: user._id, FirstName: user.FirstName, LastName: user.LastName, Username: user.Username, Age: user.Age, ContactNumber: user.ContactNumber, Following: user.Following, Followers: user.Followers, SavedPosts: user.SavedPosts, _id: user._id })
+    .send({ token, Email: user.Email, id: user._id, Username: user.Username, _id: user._id , metamaskPK: user.metamaskPK, metamaskWAddress: user.metamaskWAddress, role: user.role, Kycverified: user.Kycverified, CoinbaseVerified: user.CoinbaseVerified, Coinbase_id: user.Coinbase_id, creationdate: user.creationdate})
 })
 
 module.exports = loginRouter

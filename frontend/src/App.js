@@ -2,6 +2,8 @@ import React from "react"
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import "./App.css"
 import CreateFlow from './components/CreateFlow'
+import DeleteFlow from './components/DeleteFlow'
+import UpdateFlow from './components/UpdateFlow'
 import Home from './components/Home';
 import Navbar from "./components/Navbar"
 import UserService from "./services/Users"
@@ -28,7 +30,9 @@ export default function App() {
           <Route exact path="/" element={!window.localStorage.getItem('token')? <Home user={user} setuser={setuser} />: <Navigate replace to="/profile" />}/>
           <Route path="/profile" element={window.localStorage.getItem('token') ? <Profile user={user} setuser={setuser} /> : <Navigate replace to="/" />} />
           <Route path="/BuyInsurance" element={window.localStorage.getItem('token') ? <BuyInsurance user={user} setuser={setuser} /> : <Navigate replace to="/" />} />
-          <Route path="/CreateFlow" element={window.localStorage.getItem('token') ? <BuyInsurance user={user} setuser={setuser} /> : <Navigate replace to="/" />} />
+          <Route path="/CreateFlow" element={window.localStorage.getItem('token') ? <CreateFlow user={user} setuser={setuser} /> : <Navigate replace to="/" />} />
+          <Route path="/UpdateFlow" element={window.localStorage.getItem('token') ? <UpdateFlow user={user} setuser={setuser} /> : <Navigate replace to="/" />} />
+          <Route path="/DeleteFlow" element={window.localStorage.getItem('token') ? <DeleteFlow user={user} setuser={setuser} /> : <Navigate replace to="/" />} />
           <Route path="/ClaimInsurance" element={window.localStorage.getItem('token') ? <ClaimInsurance user={user} setuser={setuser} /> : <Navigate replace to="/" />} />
           <Route path="/Wallet" element={window.localStorage.getItem('token') ? <Wallet user={user} setuser={setuser} /> : <Navigate replace to="/" />} />
           <Route path="*" element={<Navigate replace to="/"/>} /> 
