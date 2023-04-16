@@ -1,9 +1,10 @@
 import React from "react"
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import "./App.css"
-import Home from './components/Home';
+import { useState, useEffect } from 'react';
+import { ethers } from 'ethers';
 
 export default function Wallet(props) {
+
     const [Amount, setAmount] = React.useState(0)
     const [Balance, setBalance] = React.useState(0)
     const [Address, setAddress] = React.useState("")
@@ -12,11 +13,64 @@ export default function Wallet(props) {
         Amount: false,
         Address: false
     })
+    const [web3Provider, setWeb3Provider] = useState(null);
+    const [walletAddress, setWalletAddress] = useState('');
     function changeAmount(event) {
         setemaillogin(event.target.value)
     }
     function changeAddress(event) {
         setpasswordlogin(event.target.value)
+    }
+    useEffect(() => {
+        async function getBalance() {
+            const provider = new ethers.providers.JsonRpcProvider('ethereum-client-url');
+            const contract = new ethers.Contract(contractName, contractAbi, provider);
+            const balance = await contract.getBalance(walletAddress);
+            setBalance(balance);
+        }
+        if (web3Provider && walletAddress) {
+            getBalance();
+        }
+    }, [web3Provider, walletAddress]);
+
+
+
+    async function query(functionName, args) {
+        const contract = new ethers.Contract(contractName, contractAbi, web3Provider);
+        const func = contract.functions[functionName];
+        const result = await func(...args);
+        return result;
+    }
+
+    async function deposit(functionName, args) {
+        const privateKey = new ethers.utils.HexString(loggedInUser.metamaskPK);
+        const wallet = new ethers.Wallet(privateKey, web3Provider);
+
+        const contract = new ethers.Contract(contractName, contractAbi, wallet);
+        const func = contract.functions[functionName];
+        const result = await func(...args);
+
+        return result.hash;
+    }
+
+    async function connectMetamask() {
+        if (window.ethereum) {
+            try {
+                await window.ethereum.enable();
+                const provider = new ethers.providers.Web3Provider(window.ethereum);
+                setWeb3Provider(provider);
+            } catch (error) {
+                console.error(error);
+            }
+        } else {
+            console.error('Metamask not installed');
+        }
+    }
+
+    async function handleSend() {
+        const args = [walletAddress, amount];
+        const result = await deposit('send', args);
+        console.log(result);
     }
     const handleClick = async (event) => {
         console.log(Amount, Address)
@@ -28,7 +82,7 @@ export default function Wallet(props) {
                 setAddress("")
                 // TODO: Make sure everything is reight here
             } catch (error) {
-                console.log(Amount,Address, error)
+                console.log(Amount, Address, error)
                 setAddress("")
                 setAmount("")
                 setErrorMessage(
@@ -40,7 +94,7 @@ export default function Wallet(props) {
             }
         }
         else {
-            console.log(Address,Amount)
+            console.log(Address, Amount)
             setAddress("")
             setAmount("")
             setErrorMessage(
@@ -56,7 +110,7 @@ export default function Wallet(props) {
         const isDisabled = Object.keys(errors).some(x => errors[x]);
         return !isDisabled;
     }
-    const errors = validate(Amount,Address);
+    const errors = validate(Amount, Address);
     const isDisabled = Object.keys(errors).some(x => errors[x]);
     const shouldMarkError = field => {
         const hasError = errors[field];
@@ -97,8 +151,8 @@ export default function Wallet(props) {
                                         helperText="Invalid entry"
                                         variant="filled"
                                         autoFocus
-                                        value={emaillogin}
-                                        onChange={changeemaillogin}
+                                        value={Amount}
+                                        onChange={changeAmount}
                                         onBlur={event => settouched({ ...touched, Amount: true })}
                                     /> :
                                     <TextField
@@ -110,8 +164,8 @@ export default function Wallet(props) {
                                         name="email"
                                         autoComplete="email"
                                         autoFocus
-                                        value={emaillogin}
-                                        onChange={changeemaillogin}
+                                        value={Amount}
+                                        onChange={changeAmount}
                                         onBlur={event => settouched({ ...touched, email: true })}
                                     />
                             }
@@ -129,8 +183,8 @@ export default function Wallet(props) {
                                         type="password"
                                         id="filled-error-helper-text"
                                         autoComplete="current-password"
-                                        value={passwordlogin}
-                                        onChange={changepasswordlogin}
+                                        value={Address}
+                                        onChange={changeAddress}
                                         onBlur={event => settouched({ ...touched, password: true })}
                                     /> :
                                     <TextField
@@ -142,8 +196,8 @@ export default function Wallet(props) {
                                         type="password"
                                         id="password"
                                         autoComplete="current-password"
-                                        value={passwordlogin}
-                                        onChange={changepasswordlogin}
+                                        valueAmount
+                                        onChange={changeAddress}
                                         onBlur={event => settouched({ ...touched, password: true })}
                                     />
                             }
