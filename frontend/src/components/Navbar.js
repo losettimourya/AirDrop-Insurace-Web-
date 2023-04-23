@@ -6,8 +6,16 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import RedditIcon from '@mui/icons-material/Reddit';
+import LocalMallIcon from '@mui/icons-material/LocalMall';
+import WalletIcon from '@mui/icons-material/Wallet';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import GetAppIcon from '@mui/icons-material/GetApp';
+import DeleteIcon from '@mui/icons-material/Delete';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import TokenIcon from '@mui/icons-material/Token';
+import BeachAccessIcon from '@mui/icons-material/BeachAccess';
+import UpdateIcon from '@mui/icons-material/Update';
 import { useNavigate } from "react-router-dom";
 export default function Home(props) {
     const navigate = useNavigate()
@@ -21,7 +29,7 @@ export default function Home(props) {
         <Box sx={{ flexGrow: 1 }}>
             <AppBar position="fixed">
                 <Toolbar>
-                    {matches ? <RedditIcon style={{ fontSize: "2rem", marginRight: "1rem" }} /> : null}
+                    {matches ? <BeachAccessIcon style={{ fontSize: "2rem", marginRight: "1rem" }} /> : null}
                     <Typography align="left" variant="h4" component="div" sx={{ flexGrow: 1 }}>
                         <Button color="inherit" href="/">Airdrop Insurance</Button>
                     </Typography>
@@ -42,13 +50,13 @@ export default function Home(props) {
                                 :
                                 <div>
                                     <Button color="inherit" href="/profile"><AccountCircleIcon style={{ marginRight: "0.5rem" }} />Profile</Button>
-                                    <Button color="inherit" href="/Wallet"><AccountCircleIcon style={{ marginRight: "0.5rem" }} />Wallet</Button>
-                                    <Button color="inherit" href="/BuyInsurance"><AccountCircleIcon style={{ marginRight: "0.5rem" }} />Buy Insurance</Button>
-                                    <Button color="inherit" href="/CreateFlow"><AccountCircleIcon style={{ marginRight: "0.5rem" }} />Create Flow</Button>
-                                    <Button color="inherit" href="/UpdateFlow"><AccountCircleIcon style={{ marginRight: "0.5rem" }} />Update Flow</Button>
-                                    <Button color="inherit" href="/DeleteFlow"><AccountCircleIcon style={{ marginRight: "0.5rem" }} />Delete Flow</Button>
-                                    <Button color="inherit" href="/ClaimInsurance"><ExitToAppIcon style={{ marginRight: "0.5rem" }} />Claim Insurance</Button>
-                                    <Button color="inherit" href="/GetTokens"><ExitToAppIcon style={{ marginRight: "0.5rem" }} />Get Tokens</Button>
+                                    <Button color="inherit" href="/Wallet"><WalletIcon style={{ marginRight: "0.5rem" }} />Wallet</Button>
+                                    <Button color="inherit" href="/BuyInsurance"><LocalMallIcon style={{ marginRight: "0.5rem" }} />Buy Insurance</Button>
+                                    <Button color="inherit" href="/CreateFlow"><AddCircleOutlineIcon style={{ marginRight: "0.5rem" }} />Create Flow</Button>
+                                    <Button color="inherit" href="/UpdateFlow"><UpdateIcon style={{ marginRight: "0.5rem" }} />Update Flow</Button>
+                                    <Button color="inherit" href="/DeleteFlow"><DeleteIcon style={{ marginRight: "0.5rem" }} />Delete Flow</Button>
+                                    <Button color="inherit" href="/ClaimInsurance"><GetAppIcon style={{ marginRight: "0.5rem" }} />Claim Insurance</Button>
+                                    <Button color="inherit" href="/GetTokens"><TokenIcon style={{ marginRight: "0.5rem" }} />Get Tokens</Button>
                                     <Button color="inherit" onClick={handleLogout}><ExitToAppIcon style={{ marginRight: "0.5rem" }} />Logout</Button>
                                 </div>
                         :

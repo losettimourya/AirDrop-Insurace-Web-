@@ -58,7 +58,6 @@ export default function CreateFlow(props){
     const connectWallet = async () => {
         try {
             const { ethereum } = window;
-
             if (!ethereum) {
                 alert("Get MetaMask!");
                 return;
@@ -148,6 +147,7 @@ export default function CreateFlow(props){
                             display: 'flex',
                             flexDirection: 'column',
                             alignItems: 'center',
+                            maxWidth: 500,
                         }}
                     >
           <Box component="form" sx={{ mt: 3 }}>
@@ -196,9 +196,9 @@ export default function CreateFlow(props){
               )}
             </Button>
             <Box sx={{ my: 2 }}>
-              <Typography variant="body1">
+              {/* <Typography variant="body1">
                 Go to the CreateFlow.js component and look at the <b>createNewFlow()</b> function to see under the hood
-              </Typography>
+              </Typography> */}
               <Box sx={{ mt: 2 }}>
                 <Typography variant="body1">Your flow will be equal to:</Typography>
                 <Typography variant="h6">

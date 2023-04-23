@@ -196,9 +196,9 @@ export default function CreateFlow(props){
               )}
             </Button>
             <Box sx={{ my: 2 }}>
-              <Typography variant="body1">
+              {/* <Typography variant="body1">
                 Go to the UpdateFlow.js component and look at the <b>createNewFlow()</b> function to see under the hood
-              </Typography>
+              </Typography> */}
               <Box sx={{ mt: 2 }}>
                 <Typography variant="body1">Your flow will be equal to:</Typography>
                 <Typography variant="h6">

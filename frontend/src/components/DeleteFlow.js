@@ -203,9 +203,9 @@ export default function DeleteFlow(props){
           )}
         </Button>
 
-        <Typography variant="subtitle2" align="center" sx={{ mt: 3 }}>
+        {/* <Typography variant="subtitle2" align="center" sx={{ mt: 3 }}>
           Go to the DeleteFlow.js component and look at the <b>deleteFlow()</b> function to see under the hood
-        </Typography>
+        </Typography> */}
       </Card>
       </Box>
       </Box>

@@ -108,7 +108,7 @@ export default function GetTokens(props) {
             >
                 <Box component="form" sx={{ mt: 5 }}>
                     <Typography component="h1" variant="h4" mb={3}>
-                        Create a Flow
+                        Get Tokens
                     </Typography>
                     {currentAccount === "" ? (
                         <Button variant="contained" onClick={connectWallet} sx={{ mb: 3  , mr:3}}>
