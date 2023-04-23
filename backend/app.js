@@ -21,7 +21,6 @@ mongoose.connect(mongoUrl, { useNewurlParser: true }).then(() => {
 connection.once('open', () => {
   logger.info(`MongoDB Database connection Established Successfully`)
 })
-
 app.use(cors())
 app.use(express.json())
 app.use(middleware.requestLogger)
