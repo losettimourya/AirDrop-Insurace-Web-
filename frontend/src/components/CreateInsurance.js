@@ -10,7 +10,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Button } from '@mui/material';
 import { useNavigate } from "react-router-dom";
 // import axios from 'axios';
-import UserService from "../services/Users"
+import InsuranceService from "../services/InsuranceService";
 const theme = createTheme();
 function validate(Username, Email,password) {
     return {
@@ -33,12 +33,8 @@ const Notification = ({ message }) => {
         </div>
     )
 }
-export default function ViewProfile(props) {
-    const [ReadOnlyValues, setReadOnlyValues] = React.useState({
-        Username: "",
-        Email: "",
-        Password: "",
-    })
+
+export default function CreateInsurance(props) {
     const [errorMessage, setErrorMessage] = React.useState(null)
     const [FormValues, setFormValues] = React.useState({
         Username: "",
@@ -62,7 +58,7 @@ export default function ViewProfile(props) {
         const isDisabled = Object.keys(errors).some(x => errors[x]);
         return !isDisabled;
     }
-    const errors = validate(FormValues.Username, FormValues.Email,FormValues.password);
+    const errors = validate(FormValues.Username, FormValues.Email, FormValues.password);
     const isDisabled = Object.keys(errors).some(x => errors[x]);
     const shouldMarkError = field => {
         const hasError = errors[field];
@@ -72,7 +68,7 @@ export default function ViewProfile(props) {
     function handleEdit() {
         setedit(!edit)
         setFormValues({
-            ...FormValues, 
+            ...FormValues,
             Username: "",
             Email: "",
             password: ""
@@ -127,7 +123,7 @@ export default function ViewProfile(props) {
                         ...FormValues
                     })
                     setFormValues({
-                        ...FormValues, 
+                        ...FormValues,
                         Username: "",
                         Email: "",
                         password: ""
@@ -162,7 +158,6 @@ export default function ViewProfile(props) {
                             PROFILE
                         </Typography>
                         <Notification message={errorMessage} />
-                        {edit ?
                             <Box component="form" onSubmit={handleSubmit} sx={{ mt: 3 }}>
                                 <Grid container spacing={2}>
                                     <Grid item xs={12}>
@@ -289,53 +284,7 @@ export default function ViewProfile(props) {
                                 }
 
                             </Box>
-                            :
-                            <Box component="form" sx={{ mt: 3 }}>
-                                <Grid container spacing={2}>
-                                    <Grid item xs={12}>
-                                        <TextField
-                                            fullWidth
-                                            id="outlined-read-only-input"
-                                            label="Username"
-                                            name="username"
-
-                                            InputProps={{
-                                                readOnly: true,
-                                            }}
-                                            value={ReadOnlyValues.Username}
-                                        />
-                                    </Grid>
-                                    <Grid item xs={12}>
-                                        <TextField
-                                            fullWidth
-                                            id="outlined-read-only-input"
-                                            label="Email Address"
-                                            name="Email"
-                                            autoComplete="email"
-
-                                            InputProps={{
-                                                readOnly: true,
-                                            }}
-                                            value={ReadOnlyValues.Email}
-                                        />
-                                    </Grid>
-                                </Grid>
-                                {
-                                    showbuttons.showeditbutton ?
-                                        <Button
-                                            fullWidth
-                                            variant="contained"
-                                            sx={{ mt: 3, mb: 2 }}
-                                            onClick={handleEdit}
-                                        >
-                                            Edit
-                                        </Button>
-                                        :
-                                        <Button fullWidth disabled sx={{ mt: 3, mb: 2 }}> Edit </Button>
-                                }
                             </Box>
-                        }
-                    </Box>
                 </Container>
             </ThemeProvider>
         </div>

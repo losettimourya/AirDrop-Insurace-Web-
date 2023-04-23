@@ -1,5 +1,4 @@
 import React from "react"
-// import AuthContext from "../context/AuthContext"
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -27,24 +26,37 @@ export default function Home(props) {
                         <Button color="inherit" href="/">Airdrop Insurance</Button>
                     </Typography>
                     {props.user ?
-                        <div>
-                            <Button color="inherit" href="/profile"><AccountCircleIcon style={{ marginRight: "0.5rem" }} />Profile</Button>
-                            <Button color="inherit" href="/Wallet"><AccountCircleIcon style={{ marginRight: "0.5rem" }} />Wallet</Button>
-                            <Button color="inherit" href="/BuyInsurance"><AccountCircleIcon style={{ marginRight: "0.5rem" }} />Buy Insurance</Button>
-                            <Button color="inherit" href="/CreateFlow"><AccountCircleIcon style={{ marginRight: "0.5rem" }} />Create Flow</Button>
-                            <Button color="inherit" href="/UpdateFlow"><AccountCircleIcon style={{ marginRight: "0.5rem" }} />Update Flow</Button>
-                            <Button color="inherit" href="/DeleteFlow"><AccountCircleIcon style={{ marginRight: "0.5rem" }} />Delete Flow</Button>
-                            <Button color="inherit" href="/ClaimInsurance"><ExitToAppIcon style={{ marginRight: "0.5rem" }} />Claim Insurance</Button>
-                            <Button color="inherit" onClick={handleLogout}><ExitToAppIcon style={{ marginRight: "0.5rem" }} />Logout</Button>
-                        </div>
+                        props.user.role === "admin" ?
+                            <div>
+                                <Button color="inherit" href="/profile"><AccountCircleIcon style={{ marginRight: "0.5rem" }} />Profile</Button>
+                                <Button color="inherit" href="/CreateInsurance"><AccountCircleIcon style={{ marginRight: "0.5rem" }} />Create Insurance</Button>
+                                <Button color="inherit" href="/VerifyClaim"><ExitToAppIcon style={{ marginRight: "0.5rem" }} />Verify Claim</Button>
+                                <Button color="inherit" onClick={handleLogout}><ExitToAppIcon style={{ marginRight: "0.5rem" }} />Logout</Button>
+                            </div> :
+                            props.user.role === "speculator" ?
+                                <div>
+                                    <Button color="inherit" href="/profile"><AccountCircleIcon style={{ marginRight: "0.5rem" }} />Profile</Button>
+                                    <Button color="inherit" href="/InsuranceBid"><AccountCircleIcon style={{ marginRight: "0.5rem" }} />InsuranceBid</Button>
+                                    <Button color="inherit" onClick={handleLogout}><ExitToAppIcon style={{ marginRight: "0.5rem" }} />Logout</Button>
+                                </div>
+                                :
+                                <div>
+                                    <Button color="inherit" href="/profile"><AccountCircleIcon style={{ marginRight: "0.5rem" }} />Profile</Button>
+                                    <Button color="inherit" href="/Wallet"><AccountCircleIcon style={{ marginRight: "0.5rem" }} />Wallet</Button>
+                                    <Button color="inherit" href="/BuyInsurance"><AccountCircleIcon style={{ marginRight: "0.5rem" }} />Buy Insurance</Button>
+                                    <Button color="inherit" href="/CreateFlow"><AccountCircleIcon style={{ marginRight: "0.5rem" }} />Create Flow</Button>
+                                    <Button color="inherit" href="/UpdateFlow"><AccountCircleIcon style={{ marginRight: "0.5rem" }} />Update Flow</Button>
+                                    <Button color="inherit" href="/DeleteFlow"><AccountCircleIcon style={{ marginRight: "0.5rem" }} />Delete Flow</Button>
+                                    <Button color="inherit" href="/ClaimInsurance"><ExitToAppIcon style={{ marginRight: "0.5rem" }} />Claim Insurance</Button>
+                                    <Button color="inherit" onClick={handleLogout}><ExitToAppIcon style={{ marginRight: "0.5rem" }} />Logout</Button>
+                                </div>
                         :
                         <div>
-                            Home Page
+                            Airdrop-Insurance
                         </div>
                     }
                 </Toolbar>
             </AppBar>
         </Box>
-
     )
 }
