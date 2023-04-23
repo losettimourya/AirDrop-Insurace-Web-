@@ -31,7 +31,7 @@ async function createNewFlow(recipient, flowRate) {
         const createFlowOperation = daix.createFlow({
             sender: await superSigner.getAddress(),
             receiver: "0xEF52F6b2c89561A8D36CdE667C174F9c7674cAF1",
-            flowRate: "222"
+            flowRate: "22"
             // userData?: string
         });
         console.log(createFlowOperation);
