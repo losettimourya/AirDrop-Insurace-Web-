@@ -13,6 +13,7 @@ import ClaimInsurance from "./components/ClaimInsurance"
 import Wallet from "./components/Wallet"
 import VerifyClaim from "./components/VerifyClaim"
 import CreateInsurance from "./components/CreateInsurance"
+import GetTokens from "./components/GetTokens";
 
 export default function App() {
   const [user, setuser] = React.useState(null)
@@ -39,6 +40,7 @@ export default function App() {
           <Route path="/Wallet" element={window.localStorage.getItem('token') ? <Wallet user={user} setuser={setuser} /> : <Navigate replace to="/" />} />
           <Route path="/VerifyClaim" element={window.localStorage.getItem('token') ? <VerifyClaim user={user} setuser={setuser} /> : <Navigate replace to="/" />} />
           <Route path="/CreateInsurance" element={window.localStorage.getItem('token') ? <CreateInsurance user={user} setuser={setuser} /> : <Navigate replace to="/" />} />
+          <Route path="/GetTokens" element={window.localStorage.getItem('token') ? <GetTokens user={user} setuser={setuser} /> : <Navigate replace to="/" />} />
           <Route path="*" element={<Navigate replace to="/"/>} /> 
         </Routes>
       </div>
