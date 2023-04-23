@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import Avatar from '@mui/material/Avatar';
 import TextField from '@mui/material/TextField';
 import Grid from '@mui/material/Grid';
@@ -9,11 +8,6 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Button } from '@mui/material';
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
 import { useNavigate } from "react-router-dom";
 // import axios from 'axios';
 import UserService from "../services/Users"
@@ -24,11 +18,7 @@ function validate(FirstName, LastName, Username, Email, Age, ContactNumber, pass
     return {
         Email: Email.length === 0,
         password: password.length === 0,
-        FirstName: FirstName.length === 0,
-        LastName: LastName.length === 0,
-        Age: Age <= 0,
         Username: Username.length === 0,
-        ContactNumber: ContactNumber.length === 0
     };
 }
 const Notification = ({ message }) => {
@@ -47,37 +37,21 @@ const Notification = ({ message }) => {
 }
 export default function ViewProfile(props) {
     const [ReadOnlyValues, setReadOnlyValues] = React.useState({
-        FirstName: "",
-        LastName: "",
         Username: "",
         Email: "",
-        Age: "",
-        ContactNumber: "",
         Password: "",
-        Followers: [],
-        Following: []
     })
     const [errorMessage, setErrorMessage] = React.useState(null)
     const [FormValues, setFormValues] = React.useState({
-        FirstName: "",
-        LastName: "",
         Username: "",
         Email: "",
-        Age: "",
-        ContactNumber: "",
         password: ""
     })
     const [touched, settouched] = React.useState({
-        FirstName: false,
-        LastName: false,
         Username: false,
         Email: false,
-        Age: false,
-        ContactNumber: false,
         password: false
     })
-    const [show1, setshow1] = React.useState(false)
-    const [show2, setshow2] = React.useState(false)
     const [edit, setedit] = React.useState(false)
     const [showbuttons, setshowbuttons] = React.useState({
         showsavebutton: true,
@@ -86,11 +60,11 @@ export default function ViewProfile(props) {
     })
     const navigate = useNavigate()
     function canBeSubmitted() {
-        const errors = validate(touched.FirstName, touched.LastName, touched.Username, touched.Email, touched.Age, touched.ContactNumber, touched.password);
+        const errors = validate(touched.Username, touched.Email, touched.password);
         const isDisabled = Object.keys(errors).some(x => errors[x]);
         return !isDisabled;
     }
-    const errors = validate(FormValues.FirstName, FormValues.LastName, FormValues.Username, FormValues.Email, FormValues.Age, FormValues.ContactNumber, FormValues.password);
+    const errors = validate(FormValues.Username, FormValues.Email,FormValues.password);
     const isDisabled = Object.keys(errors).some(x => errors[x]);
     const shouldMarkError = field => {
         const hasError = errors[field];
@@ -101,12 +75,9 @@ export default function ViewProfile(props) {
     function handleEdit() {
         setedit(!edit)
         setFormValues({
-            ...FormValues, FirstName: "",
-            LastName: "",
+            ...FormValues, 
             Username: "",
             Email: "",
-            Age: "",
-            ContactNumber: "",
             password: ""
         })
     }
@@ -117,15 +88,9 @@ export default function ViewProfile(props) {
                 const data = await UserService.getID()
                 console.log("recieved ReadOnlyValues", data)
                 setReadOnlyValues({
-                    FirstName: data.FirstName,
-                    LastName: data.LastName,
                     Username: data.Username,
                     Email: data.Email,
-                    Age: data.Age,
-                    ContactNumber: data.ContactNumber,
                     Password: data.Password,
-                    Following: data.Following,
-                    Followers: data.Followers
                 })
             }
             catch (error) {
@@ -138,12 +103,8 @@ export default function ViewProfile(props) {
         event.preventDefault();
         if (!canBeSubmitted()) {
             setFormValues({
-                FirstName: "",
-                LastName: "",
                 Username: "",
                 Email: "",
-                Age: "",
-                ContactNumber: "",
                 password: "",
             })
             setErrorMessage(
@@ -169,12 +130,9 @@ export default function ViewProfile(props) {
                         ...FormValues
                     })
                     setFormValues({
-                        ...FormValues, FirstName: "",
-                        LastName: "",
+                        ...FormValues, 
                         Username: "",
                         Email: "",
-                        Age: "",
-                        ContactNumber: "",
                         password: ""
                     })
                 }
@@ -188,38 +146,6 @@ export default function ViewProfile(props) {
             console.log(ReadOnlyValues)
         }
     }
-    function Deleterow2(event, id) {
-        console.log(id)
-        const DeleteFollowers = async () => {
-            try {
-                // console.log("props user =", props.user)
-                const data = await UserService.UpdateFollowers((JSON.parse(window.localStorage.getItem('token'))).id, { TargetID: id })
-                console.log("recieved", data)
-                setReadOnlyValues({ ...ReadOnlyValues, Followers: ReadOnlyValues.Followers.filter(element => element.id !== id) })
-            }
-            catch (error) {
-                console.log(error)
-            }
-        }
-        DeleteFollowers();
-    }
-    function Deleterow1(event, id) {
-        console.log(id)
-        const DeleteFollowing = async () => {
-            try {
-                // console.log("props user =", props.user)
-                const data = await UserService.UpdateFollowing((JSON.parse(window.localStorage.getItem('token'))).id, { TargetID: id })
-                console.log("recieved", data)
-                setReadOnlyValues({ ...ReadOnlyValues, Following: ReadOnlyValues.Following.filter(element => element.id !== id) })
-            }
-            catch (error) {
-                console.log(error)
-            }
-        }
-        DeleteFollowing();
-    }
-    // console.log("Readonly values for Followers",ReadOnlyValues.Followers)
-    // console.log("Readonly values for Following",ReadOnlyValues.Following)
     return (
         <div>
             <ThemeProvider theme={theme}>
@@ -242,69 +168,6 @@ export default function ViewProfile(props) {
                         {edit ?
                             <Box component="form" onSubmit={handleSubmit} sx={{ mt: 3 }}>
                                 <Grid container spacing={2}>
-                                    <Grid item xs={12} sm={6}>
-                                        {
-                                            shouldMarkError("FirstName") ?
-                                                <TextField
-                                                    error
-                                                    id="filled-error-helper-text"
-                                                    helperText="Invalid entry"
-                                                    onBlur={event => settouched({ ...touched, FirstName: true })}
-                                                    autoComplete="given-name"
-                                                    name="firstName"
-                                                    required
-                                                    fullWidth
-                                                    label="FirstName"
-                                                    autoFocus
-                                                    variant="filled"
-                                                    value={FormValues.FirstName}
-                                                    onChange={event => setFormValues({ ...FormValues, FirstName: event.target.value })}
-                                                />
-                                                :
-                                                <TextField
-                                                    autoComplete="given-name"
-                                                    name="firstName"
-                                                    required
-                                                    fullWidth
-                                                    id="firstName"
-                                                    label="FirstName"
-                                                    autoFocus
-                                                    value={FormValues.FirstName}
-                                                    onBlur={event => settouched({ ...touched, FirstName: true })}
-                                                    onChange={event => setFormValues({ ...FormValues, FirstName: event.target.value })}
-                                                />
-                                        }
-
-                                    </Grid>
-                                    <Grid item xs={12} sm={6}>
-                                        {
-                                            shouldMarkError("LastName") ?
-                                                <TextField
-                                                    error
-                                                    id="filled-error-helper-text"
-                                                    helperText="Invalid entry"
-                                                    onBlur={event => settouched({ ...touched, LastName: true })}
-                                                    required
-                                                    fullWidth
-                                                    label="Last Name"
-                                                    name="lastName"
-                                                    variant="filled"
-                                                    value={FormValues.LastName}
-                                                    onChange={event => setFormValues({ ...FormValues, LastName: event.target.value })}
-                                                />
-                                                :
-                                                <TextField
-                                                    required
-                                                    fullWidth
-                                                    id="lastName"
-                                                    label="Last Name"
-                                                    name="lastName"
-                                                    value={FormValues.LastName}
-                                                    onBlur={event => settouched({ ...touched, LastName: true })}
-                                                    onChange={event => setFormValues({ ...FormValues, LastName: event.target.value })}
-                                                />
-                                        }
-                                    </Grid>
                                     <Grid item xs={12}>
                                         {
                                             shouldMarkError("Username") ?
@@ -331,71 +194,6 @@ export default function ViewProfile(props) {
                                                     value={FormValues.Username}
                                                     onBlur={event => settouched({ ...touched, Username: true })}
                                                     onChange={event => setFormValues({ ...FormValues, Username: event.target.value })}
-                                                />
-                                        }
-                                    </Grid>
-                                    <Grid item xs={12} sm={6}>
-                                        {
-                                            shouldMarkError("Age") ?
-                                                <TextField
-                                                    error
-                                                    id="filled-error-helper-text"
-                                                    helperText="Invalid entry"
-                                                    onBlur={event => settouched({ ...touched, Age: true })}
-                                                    required
-                                                    label="Age"
-                                                    type="number"
-                                                    variant="filled"
-                                                    InputLabelProps={{
-                                                        shrink: true,
-                                                    }}
-                                                    value={FormValues.Age}
-                                                    onChange={event => setFormValues({ ...FormValues, Age: event.target.value })}
-                                                />
-                                                :
-                                                <TextField
-                                                    id="outlined-number"
-                                                    required
-                                                    label="Age"
-                                                    type="number"
-                                                    InputLabelProps={{
-                                                        shrink: true,
-                                                    }}
-                                                    value={FormValues.Age}
-                                                    onBlur={event => settouched({ ...touched, Age: true })}
-                                                    onChange={event => setFormValues({ ...FormValues, Age: event.target.value })}
-                                                />
-                                        }
-                                    </Grid>
-                                    <Grid item xs={12} sm={6}>
-                                        {
-                                            shouldMarkError("ContactNumber") ?
-                                                <TextField
-                                                    variant="filled"
-                                                    error
-                                                    id="filled-error-helper-text"
-                                                    helperText="Invalid entry"
-                                                    onBlur={event => settouched({ ...touched, ContactNumber: true })}
-                                                    value={FormValues.ContactNumber}
-                                                    required
-                                                    placeholder="Contact Number"
-                                                    name="Contact Number"
-                                                    inputStyle={{
-                                                        background: "lightblue"
-                                                    }}
-                                                    onChange={event => setFormValues({ ...FormValues, ContactNumber: event.target.value })}
-                                                />
-                                                :
-                                                <TextField
-                                                    value={FormValues.ContactNumber}
-                                                    required
-                                                    placeholder="Contact Number"
-                                                    name="Contact Number"
-                                                    inputStyle={{
-                                                        background: "lightblue"
-                                                    }}
-                                                    onBlur={event => settouched({ ...touched, ContactNumber: true })}
-                                                    onChange={event => setFormValues({ ...FormValues, ContactNumber: event.target.value })}
                                                 />
                                         }
                                     </Grid>
@@ -497,34 +295,6 @@ export default function ViewProfile(props) {
                             :
                             <Box component="form" sx={{ mt: 3 }}>
                                 <Grid container spacing={2}>
-                                    <Grid item xs={12} sm={6}>
-                                        <TextField
-                                            autoComplete="given-name"
-                                            name="FirstName"
-                                            fullWidth
-                                            id="outlined-read-only-input"
-                                            label="FirstName"
-                                            autoFocus
-
-                                            InputProps={{
-                                                readOnly: true,
-                                            }}
-                                            value={ReadOnlyValues.FirstName}
-                                        />
-                                    </Grid>
-                                    <Grid item xs={12} sm={6}>
-                                        <TextField
-                                            fullWidth
-                                            id="outlined-read-only-input"
-                                            label="Last Name"
-                                            name="LastName"
-
-                                            InputProps={{
-                                                readOnly: true,
-                                            }}
-                                            value={ReadOnlyValues.LastName}
-                                        />
-                                    </Grid>
                                     <Grid item xs={12}>
                                         <TextField
                                             fullWidth
@@ -536,38 +306,6 @@ export default function ViewProfile(props) {
                                                 readOnly: true,
                                             }}
                                             value={ReadOnlyValues.Username}
-                                        />
-                                    </Grid>
-                                    <Grid item xs={12} sm={6}>
-                                        <TextField
-                                            id="outlined-number"
-                                            required
-                                            label="Age"
-                                            type="number"
-                                            InputLabelProps={{
-                                                shrink: true,
-                                            }}
-                                            name="age"
-
-                                            InputProps={{
-                                                readOnly: true,
-                                            }}
-                                            value={ReadOnlyValues.Age}
-                                        />
-                                    </Grid>
-                                    <Grid item xs={12} sm={6}>
-                                        <TextField
-
-                                            id="outlined-read-only-input"
-                                            placeholder="Contact Number"
-                                            name="Contact Number"
-                                            inputstyle={{
-                                                background: "lightblue"
-                                            }}
-                                            InputProps={{
-                                                readOnly: true,
-                                            }}
-                                            value={ReadOnlyValues.ContactNumber}
                                         />
                                     </Grid>
                                     <Grid item xs={12}>
@@ -600,100 +338,6 @@ export default function ViewProfile(props) {
                                 }
                             </Box>
                         }
-
-                        <div className="FollowerTabs">
-                            <Tabs className="Tabs">
-                                <TabList>
-                                    <Tab>Following <Button variant="contained" color="secondary" onClick={() => setshow1(!show1)}>{ReadOnlyValues.Following.length}</Button></Tab>
-                                    <Tab>Followers <Button variant="contained" color="secondary" onClick={() => setshow2(!show2)}>{ReadOnlyValues.Followers.length}</Button></Tab>
-                                </TabList>
-                                <TabPanel>
-                                    {show1 ? <Box
-                                        sx={{
-                                            marginTop: 8,
-                                            display: 'flex',
-                                            flexDirection: 'column',
-                                            alignItems: 'center',
-                                        }}
-                                    >
-                                        <Table sx={{ maxWidth: 125 }} aria-label="simple table">
-                                            <TableHead>
-                                                <TableRow>
-                                                    <TableCell>Username</TableCell>
-                                                    <TableCell align="right">Action</TableCell>
-                                                </TableRow>
-                                            </TableHead>
-                                            <TableBody>
-                                                {ReadOnlyValues.Following.map(element => {
-                                                    return (
-                                                        <TableRow key={element.Username}>
-                                                            <TableCell component="th" scope="row">
-                                                                {element.Username}
-                                                            </TableCell>
-                                                            <TableCell align="right">
-                                                                <Button variant="contained" color="secondary" onClick={(event) => Deleterow1(event, element._id)}>UNFOLLOW</Button>
-                                                            </TableCell>
-                                                        </TableRow>
-                                                    )
-                                                })}
-                                            </TableBody>
-                                        </Table>
-                                    </Box> :
-                                        <Box>
-                                            <div>
-                                                <br />
-                                                <div className='error'>
-                                                    {`Click on  ${ReadOnlyValues.Following.length} to View`}
-                                                </div>
-                                                <br />
-                                            </div>
-                                        </Box>
-                                    }
-                                </TabPanel>
-                                <TabPanel>
-                                    {show2 ? <Box
-                                        sx={{
-                                            marginTop: 8,
-                                            display: 'flex',
-                                            flexDirection: 'column',
-                                            alignItems: 'center',
-                                        }}
-                                    >
-                                        <Table sx={{ maxWidth: 125 }} aria-label="simple table">
-                                            <TableHead>
-                                                <TableRow>
-                                                    <TableCell>Username</TableCell>
-                                                    <TableCell align="right">Action</TableCell>
-                                                </TableRow>
-                                            </TableHead>
-                                            <TableBody>
-                                                {ReadOnlyValues.Followers.map(element => {
-                                                    return (
-                                                        <TableRow key={element.Username}>
-                                                            <TableCell component="th" scope="row">
-                                                                {element.Username}
-                                                            </TableCell>
-                                                            <TableCell align="right">
-                                                                <Button variant="contained" color="secondary" onClick={(event) => Deleterow2(event, element._id)}>REMOVE</Button>
-                                                            </TableCell>
-                                                        </TableRow>
-                                                    )
-                                                })}
-                                            </TableBody>
-                                        </Table>
-                                    </Box> :
-                                        <Box>
-                                            <div>
-                                                <br />
-                                                <div className='error'>
-                                                    {`Click on  ${ReadOnlyValues.Followers.length} to View`}
-                                                </div>
-                                                <br />
-                                            </div>
-                                        </Box>}
-                                </TabPanel>
-                            </Tabs>
-                        </div>
                     </Box>
                 </Container>
             </ThemeProvider>

@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { Framework } from "@superfluid-finance/sdk-core";
-import Navbar from "./Navbar";
 import {
   Button,
-  Form,
-  FormGroup,
+  Card,
+  CircularProgress,
+  Container,
   FormControl,
-  Spinner,
-  Card
-} from "react-bootstrap";
-import "../Flows.css";
+  FormGroup,
+  TextField,
+  Typography,
+} from "@mui/material";
+import Box from '@mui/material/Box';
 import { ethers } from "ethers";
 
 let account;
@@ -60,7 +61,7 @@ async function deleteExistingFlow(recipient) {
   }
 }
 
-export const DeleteFlow = (props) => {
+export default function DeleteFlow(props){
   const [recipient, setRecipient] = useState("");
   const [isButtonLoading, setIsButtonLoading] = useState(false);
   const [currentAccount, setCurrentAccount] = useState("");
@@ -137,7 +138,7 @@ export const DeleteFlow = (props) => {
   function DeleteButton({ isLoading, children, ...props }) {
     return (
       <Button variant="success" className="button" {...props}>
-        {isButtonLoading ? <Spinner animation="border" /> : children}
+        {isButtonLoading ? <CircularProgress animation="border" /> : children}
       </Button>
     );
   }
@@ -147,31 +148,43 @@ export const DeleteFlow = (props) => {
   };
 
   return (
-    <div>
-      <Navbar />
-      <h2>Delete a Flow</h2>
-      {currentAccount === "" ? (
-        <button id="connectWallet" className="button" onClick={connectWallet}>
-          Connect Wallet
-        </button>
-      ) : (
-        <Card className="connectedWallet">
-          {`${currentAccount.substring(0, 4)}...${currentAccount.substring(
-            38
-          )}`}
-        </Card>
-      )}
-      <Form>
-        <FormGroup className="mb-3">
-          <FormControl
+    <Container component="main" maxWidth="xs">
+                    <Box
+                        sx={{
+                            marginTop: 8,
+                            display: 'flex',
+                            flexDirection: 'column',
+                            alignItems: 'center',
+                        }}
+                    >
+      <Box component="form" sx={{ mt: 5 }}>
+      <Card sx={{ p: 3, mb: 3 }}>
+        <Typography variant="h4" align="center" gutterBottom>
+          Delete a Flow
+        </Typography>
+
+        {currentAccount === "" ? (
+          <Button variant="contained" onClick={connectWallet} fullWidth>
+            Connect Wallet
+          </Button>
+        ) : (
+          <Typography variant="subtitle1" align="center" gutterBottom>
+            Connected Wallet: {`${currentAccount.substring(0, 4)}...${currentAccount.substring(38)}`}
+          </Typography>
+        )}
+
+        <FormControl fullWidth sx={{ mt: 3 }}>
+          <TextField
             name="recipient"
             value={recipient}
             onChange={handleRecipientChange}
-            placeholder="Enter recipient address"
-          ></FormControl>
-        </FormGroup>
-        <FormGroup className="mb-3"></FormGroup>
-        <DeleteButton
+            label="Recipient Address"
+            variant="outlined"
+          />
+        </FormControl>
+
+        <Button
+          variant="contained"
           onClick={() => {
             setIsButtonLoading(true);
             deleteExistingFlow(recipient);
@@ -179,17 +192,23 @@ export const DeleteFlow = (props) => {
               setIsButtonLoading(false);
             }, 1000);
           }}
+          disabled={isButtonLoading}
+          fullWidth
+          sx={{ mt: 3 }}
         >
-          Click to Create Your Stream
-        </DeleteButton>
-      </Form>
+          {isButtonLoading ? (
+            <CircularProgress size={24} />
+          ) : (
+            "Delete Flow"
+          )}
+        </Button>
 
-      <div className="description">
-        <p>
-          Go to the DeleteFlow.js component and look at the <b>deleteFlow() </b>
-          function to see under the hood
-        </p>
-      </div>
-    </div>
+        <Typography variant="subtitle2" align="center" sx={{ mt: 3 }}>
+          Go to the DeleteFlow.js component and look at the <b>deleteFlow()</b> function to see under the hood
+        </Typography>
+      </Card>
+      </Box>
+      </Box>
+    </Container>
   );
 };

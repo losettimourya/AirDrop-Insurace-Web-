@@ -2,7 +2,6 @@ const bcrypt = require('bcrypt')
 const { request } = require('express')
 const usersRouter = require('express').Router()
 const User = require('../models/User.model')
-const Post = require("../models/Posts.model")
 
 usersRouter.post('/', async (request, response) => {
   console.log(request.body)

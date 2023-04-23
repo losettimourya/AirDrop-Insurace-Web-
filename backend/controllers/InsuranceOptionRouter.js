@@ -1,7 +1,5 @@
 const InsuranceOption = require("../models/InsuranceOption.model")
 const config = require('../utils/config')
-const Posts = require("../models/Posts.model")
-const Report = require("../models/Report.model")
 const { request } = require('express')
 const InsuranceOptionRouter = require('express').Router()
 InsuranceOptionRouter.post('/', async (request, response) => {

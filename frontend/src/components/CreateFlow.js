@@ -1,17 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React, { useState,useEffect } from "react";
 import { Framework } from "@superfluid-finance/sdk-core";
 import {
-    Button,
-    Form,
-    FormGroup,
-    FormControl,
-    Spinner,
-    Card
-} from "react-bootstrap";
-import "../Flows.css";
+  Button,
+  TextField,
+  CircularProgress,
+  Card,
+} from "@mui/material";
 import { ethers } from "ethers";
-import Navbar from "./Navbar";
-import UserService from "../services/Users"
+import UserService from "../services/Users";
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import Container from '@mui/material/Container';
 let account;
 //where the Superfluid logic takes place
 async function createNewFlow(recipient, flowRate) {
@@ -50,7 +49,7 @@ async function createNewFlow(recipient, flowRate) {
     }
 }
 
-export const CreateFlow = (props) => {
+export default function CreateFlow(props){
     const [recipient, setRecipient] = useState("");
     const [isButtonLoading, setIsButtonLoading] = useState(false);
     const [flowRate, setFlowRate] = useState("");
@@ -128,7 +127,7 @@ export const CreateFlow = (props) => {
     function CreateButton({ isLoading, children, ...props }) {
         return (
             <Button variant="success" className="button" {...props}>
-                {isButtonLoading ? <Spinner animation="border" /> : children}
+                {isButtonLoading ? <CircularProgress animation="border" /> : children}
             </Button>
         );
     }
@@ -142,60 +141,76 @@ export const CreateFlow = (props) => {
     };
     return (
         <div>
-            <Navbar />
-            <h2>Create a Flow</h2>
+            <Container component="main" maxWidth="xs">
+                    <Box
+                        sx={{
+                            marginTop: 8,
+                            display: 'flex',
+                            flexDirection: 'column',
+                            alignItems: 'center',
+                        }}
+                    >
+          <Box component="form" sx={{ mt: 3 }}>
+            <Typography variant="h4">Create a Flow</Typography>
             {currentAccount === "" ? (
-                <button id="connectWallet" className="button" onClick={connectWallet}>
-                    Connect Wallet
-                </button>
+              <Button variant="contained" onClick={connectWallet} sx={{ my: 2 }}>
+                Connect Wallet
+              </Button>
             ) : (
-                <Card className="connectedWallet">
-                    {`${currentAccount.substring(0, 4)}...${currentAccount.substring(
-                        38
-                    )}`}
-                </Card>
+              <Card sx={{ p: 2, my: 2 }}>
+                <Typography variant="body1">
+                  {`${currentAccount.substring(0, 4)}...${currentAccount.substring(38)}`}
+                </Typography>
+              </Card>
             )}
-            <Form>
-                <FormGroup className="mb-3">
-                    <FormControl
-                        name="recipient"
-                        value={recipient}
-                        onChange={handleRecipientChange}
-                        placeholder="Enter recipient address"
-                    ></FormControl>
-                </FormGroup>
-                <FormGroup className="mb-3">
-                    <FormControl
-                        name="flowRate"
-                        value={flowRate}
-                        onChange={handleFlowRateChange}
-                        placeholder="Enter a flowRate in wei/second"
-                    ></FormControl>
-                </FormGroup>
-                <CreateButton
-                    onClick={() => {
-                        setIsButtonLoading(true);
-                        createNewFlow(recipient, flowRate);
-                        setTimeout(() => {
-                            setIsButtonLoading(false);
-                        }, 1000);
-                    }}
-                >
-                    Click to Create Your Stream
-                </CreateButton>
-            </Form>
-            <div className="description">
-                <p>
-                    Go to the CreateFlow.js component and look at the <b>createFlow() </b>
-                    function to see under the hood
-                </p>
-                <div className="calculation">
-                    <p>Your flow will be equal to:</p>
-                    <p>
-                        <b>${flowRateDisplay !== " " ? flowRateDisplay : 0}</b> DAIx/month
-                    </p>
-                </div>
-            </div>
+            <TextField
+              label="Recipient Address"
+              value={recipient}
+              onChange={handleRecipientChange}
+              fullWidth
+              sx={{ my: 2 }}
+            />
+            <TextField
+              label="Flow Rate (wei/second)"
+              value={flowRate}
+              onChange={handleFlowRateChange}
+              fullWidth
+              sx={{ my: 2 }}
+            />
+            <Button
+              variant="contained"
+              onClick={() => {
+                setIsButtonLoading(true);
+                createNewFlow(recipient, flowRate);
+                setTimeout(() => {
+                  setIsButtonLoading(false);
+                }, 1000);
+              }}
+              disabled={!recipient || !flowRate || isButtonLoading}
+              sx={{ my: 2 }}
+            >
+              {isButtonLoading ? (
+                <CircularProgress size={24} color="inherit" />
+              ) : (
+                "Click to Create Your Stream"
+              )}
+            </Button>
+            <Box sx={{ my: 2 }}>
+              <Typography variant="body1">
+                Go to the CreateFlow.js component and look at the <b>createNewFlow()</b> function to see under the hood
+              </Typography>
+              <Box sx={{ mt: 2 }}>
+                <Typography variant="body1">Your flow will be equal to:</Typography>
+                <Typography variant="h6">
+                  <b>{flowRateDisplay !== "" ? flowRateDisplay : 0}</b> DAIx/month
+                </Typography>
+              </Box>
+            </Box>
+          </Box>
+          </Box>
+          </Container>
         </div>
-    );
-};
+      );
+    };
+
+    

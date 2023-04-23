@@ -17,7 +17,7 @@ import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 
 const theme = createTheme();
-function validate(FirstName, LastName, Username, Email, Age, ContactNumber, password) {
+function validate(Username, Email, role, password) {
   // true means invalid, so our conditions got reversed
   return {
     Email: Email.length === 0,
@@ -159,7 +159,7 @@ export default function Register(props) {
                 <Grid item xs={12} sm={6}>
                   <FormControl component="fieldset">
                   <FormLabel id="demo-controlled-radio-buttons-group">Role</FormLabel>
-                    <RadioGroup aria-label="role" name="role" value={role} onChange={event => setFormValues({ ...FormValues, role: event.target.value })}>
+                    <RadioGroup aria-label="role" name="role" value={FormValues.CssBaseline} onChange={event => setFormValues({ ...FormValues, role: event.target.value })}>
                       <FormControlLabel value="speculator" control={<Radio />} label="Speculator" />
                       <FormControlLabel value="member" control={<Radio />} label="Member" />
                     </RadioGroup>
