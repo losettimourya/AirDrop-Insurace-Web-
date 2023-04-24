@@ -8,7 +8,9 @@ const InsuranceOptionSchema = new mongoose.Schema({
     Creationdate: { type: Date, required: true },
     provider:{type:String},
     Payout:{type:Number,required:true},
-    Automated:{type:Boolean}
+    Users: [{ type: String}],
+    Automated:{type:Boolean},
+
 })
 
 InsuranceOptionSchema.set('toJSON', {

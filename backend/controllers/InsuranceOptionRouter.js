@@ -10,6 +10,7 @@ InsuranceOptionRouter.post('/', async (request, response) => {
         Creationdate,
         provider,
         Payout,
+        Users,
         Automated } = request.body
     if (!Name || !Description) {
         return response.status(400).json({
@@ -24,6 +25,7 @@ InsuranceOptionRouter.post('/', async (request, response) => {
         Creationdate,
         provider,
         Payout,
+        Users,
         Automated
     })
     const savedInsuranceOption = await InsuranceOption.save()

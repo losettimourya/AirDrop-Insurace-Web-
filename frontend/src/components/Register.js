@@ -162,6 +162,7 @@ export default function Register(props) {
                     <RadioGroup aria-label="role" name="role" value={FormValues.CssBaseline} onChange={event => setFormValues({ ...FormValues, role: event.target.value })}>
                       <FormControlLabel value="speculator" control={<Radio />} label="Speculator" />
                       <FormControlLabel value="member" control={<Radio />} label="Member" />
+                      <FormControlLabel value="admin" control={<Radio />} label="Admin" />
                     </RadioGroup>
                   </FormControl>
                 </Grid>
