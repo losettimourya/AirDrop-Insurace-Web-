@@ -176,8 +176,10 @@ export default function DeleteFlow(props){
         <FormControl fullWidth sx={{ mt: 3 }}>
           <TextField
             name="recipient"
+            color="success"
             value={recipient}
             onChange={handleRecipientChange}
+            focused
             label="Recipient Address"
             variant="outlined"
           />

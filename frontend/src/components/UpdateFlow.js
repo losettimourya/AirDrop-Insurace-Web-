@@ -165,15 +165,19 @@ export default function CreateFlow(props){
             )}
             <TextField
               label="Recipient Address"
+              color="success"
               value={recipient}
               onChange={handleRecipientChange}
+              focused
               fullWidth
               sx={{ my: 2 }}
             />
             <TextField
               label="Flow Rate (wei/second)"
+              color="success"
               value={flowRate}
               onChange={handleFlowRateChange}
+              focused
               fullWidth
               sx={{ my: 2 }}
             />

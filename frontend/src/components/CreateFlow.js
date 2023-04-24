@@ -157,8 +157,8 @@ export default function CreateFlow(props){
                 Connect Wallet
               </Button>
             ) : (
-              <Card sx={{ p: 2, my: 2 }}>
-                <Typography variant="body1">
+              <Card sx={{ p: 2, my: 2 }} color="success">
+                <Typography variant="body1" >
                   {`${currentAccount.substring(0, 4)}...${currentAccount.substring(38)}`}
                 </Typography>
               </Card>
@@ -166,15 +166,19 @@ export default function CreateFlow(props){
             <TextField
               label="Recipient Address"
               value={recipient}
+              color="success"
               onChange={handleRecipientChange}
+              focused
               fullWidth
-              sx={{ my: 2 }}
+              sx={{ my: 2}}
             />
             <TextField
               label="Flow Rate (wei/second)"
               value={flowRate}
+              color="success"
               onChange={handleFlowRateChange}
               fullWidth
+              focused
               sx={{ my: 2 }}
             />
             <Button
