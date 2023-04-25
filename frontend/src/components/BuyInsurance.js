@@ -170,25 +170,25 @@ export default function MySubGreddits(props) {
         const daix = await sf.loadSuperToken("fDAIx");
         console.log("Flowrate", flowRate)
         console.log(daix);
-        // try {
-        //     const createFlowOperation = daix.createFlow({
-        //         sender: await superSigner.getAddress(),
-        //         receiver: recipient,
-        //         flowRate: flowRate,
-        //     });
-        //     console.log(createFlowOperation);
-        //     console.log("Creating your stream...");
-        //     const result = await createFlowOperation.exec(superSigner);
-        //     console.log(result);
-        //     console.log(
-        //         `Congrats - you've just created a money stream!`
-        //     );
-        // } catch (error) {
-        //     console.log(
-        //         "Hmmm, your transaction threw an error. Make sure that this stream does not already exist, and that you've entered a valid Ethereum address!"
-        //     );
-        //     console.error(error);
-        // }
+        try {
+            const createFlowOperation = daix.createFlow({
+                sender: await superSigner.getAddress(),
+                receiver: recipient,
+                flowRate: flowRate,
+            });
+            console.log(createFlowOperation);
+            console.log("Creating your stream...");
+            const result = await createFlowOperation.exec(superSigner);
+            console.log(result);
+            console.log(
+                `Congrats - you've just created a money stream!`
+            );
+        } catch (error) {
+            console.log(
+                "Hmmm, your transaction threw an error. Make sure that this stream does not already exist, and that you've entered a valid Ethereum address!"
+            );
+            console.error(error);
+        }
         const UpdateAddress = async () => {  
             try {
                 console.log("UserID = ",(JSON.parse(localStorage.getItem('token')))._id)
