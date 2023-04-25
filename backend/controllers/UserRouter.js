@@ -80,16 +80,18 @@ usersRouter.put('/update/:id', async (request, response) => {
   response.status(201).json(updateduser)
 })
 
-usersRouter.put('/metamask/:id', async (request, response) => {
+usersRouter.put('/connect/:id', async (request, response) => {
   // * For Updating Profile Data
-  console.log(request.body)
-  const { metamaskPK,
+  // console.log("entered connect")
+  // console.log("connect",request.body)
+  const {
     metamaskWAddress } = request.body
+  // console.log("metamaskWalletAddress",metamaskWAddress)
   const UserProfile = await User.findById(request.params.id)
-  UserProfile.metamaskPK = metamaskPK
+  // console.log("UserProfile",UserProfile)
   UserProfile.metamaskWAddress = metamaskWAddress
   const updateduser = await User.findByIdAndUpdate(UserProfile._id, UserProfile, { new: true })
-  console.log(updateduser)
+  // console.log("Updateduser",updateduser)
   response.status(201).json(updateduser)
 })
 

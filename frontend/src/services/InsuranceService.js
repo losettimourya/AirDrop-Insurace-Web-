@@ -10,14 +10,20 @@ const setToken = newToken => {
 }
 
 const getAll = () => {
-    const request = axios.get(baseUrl)
+    const config = {
+        headers: { Authorization: token },
+    }
+    const request = axios.get(baseUrl,config)
     return request.then(response => response.data).catch(error => console.log(error))
 }
 
 const getID = (id) => {
+    const config = {
+        headers: { Authorization: token },
+    }
     const loggedUserJSON = window.localStorage.getItem('token')
     if (loggedUserJSON) {
-        const request = axios.get(`${baseUrl}/${id}`)
+        const request = axios.get(`${baseUrl}/${id}`,config)
         return request.then(response => response.data).catch(error => console.log(error))
     }
     else {
@@ -49,5 +55,37 @@ const Delete = (id) => {
     return request.then(response => response.data).catch(error => console.log(error))
 }
 
-const newobj = { getAll, getID, create, UpdateInsurance, setToken, Delete }
+const AcceptRequest = (id, newObject) => {
+    const config = {
+        headers: { Authorization: token },
+    }
+    const request = axios.put(`${baseUrl}/accept/${id}`, newObject, config)
+    return request.then(response => response.data).catch(error => console.log(error))
+}
+
+const RejectRequest = (id, newObject) => {
+    const config = {
+        headers: { Authorization: token },
+    }
+    const request = axios.put(`${baseUrl}/reject/${id}`, newObject, config)
+    return request.then(response => response.data).catch(error => console.log(error))
+}
+
+const ClaimRequest = (id,newObject) => {
+    const config = {
+        headers: { Authorization: token },
+    }
+    const request = axios.put(`${baseUrl}/claim/${id}`, newObject, config)
+    return request.then(response => response.data).catch(error => console.log(error))
+}
+
+const BuyOption = (id,newObject) => {
+    const config = {
+        headers: { Authorization: token },
+    }
+    const request = axios.put(`${baseUrl}/buy/${id}`, newObject, config)
+    return request.then(response => response.data).catch(error => console.log(error))
+}
+
+const newobj = { getAll, getID, create, UpdateInsurance, setToken, Delete, AcceptRequest, RejectRequest , ClaimRequest, BuyOption}
 export default newobj

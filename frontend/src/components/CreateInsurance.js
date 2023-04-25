@@ -16,14 +16,12 @@ import InsuranceService from "../services/InsuranceService";
 
 const theme = createTheme();
 
-function validate(name, description, price, expirationDate, creationDate, provider, payout) {
+function validate(name, Description, Price, Provider, payout) {
     return {
         Name: name.length === 0,
-        Description: description.length === 0,
-        Price: price <= 0,
-        ExpirationDate: expirationDate.length === 0,
-        CreationDate: creationDate.length === 0,
-        Provider: provider.length === 0,
+        Description: Description.length === 0,
+        Price: Price <= 0,
+        Provider: Provider.length === 0,
         Payout: payout <= 0,
     };
 }
@@ -49,8 +47,6 @@ export default function CreateInsurance(props) {
         Name: "",
         Description: "",
         Price: 0,
-        ExpirationDate: null,
-        CreationDate: null,
         Provider: "",
         Payout: 0,
         Automated: false,
@@ -59,14 +55,12 @@ export default function CreateInsurance(props) {
         Name: false,
         Description: false,
         Price: false,
-        ExpirationDate: false,
-        CreationDate: false,
         Provider: false,
         Payout: false,
         Automated: false,
     });
     const [showButtons, setshowButtons] = React.useState({
-        showSaveButton: true,
+        showsavebutton: true,
     });
     const navigate = useNavigate();
 
@@ -75,8 +69,6 @@ export default function CreateInsurance(props) {
             touched.Name,
             touched.Description,
             touched.Price,
-            touched.ExpirationDate,
-            touched.CreationDate,
             touched.Provider,
             touched.Payout,
             touched.Automated
@@ -89,8 +81,6 @@ export default function CreateInsurance(props) {
         FormValues.Name,
         FormValues.Description,
         FormValues.Price,
-        FormValues.ExpirationDate,
-        FormValues.CreationDate,
         FormValues.Provider,
         FormValues.Payout
     );
@@ -108,9 +98,7 @@ export default function CreateInsurance(props) {
             Name: "",
             Description: "",
             Price: 0,
-            Expirationdate: "",
-            Creationdate: "",
-            provider: "",
+            Provider: "",
             Payout: 0,
             Automated: false,
         })
@@ -122,9 +110,7 @@ export default function CreateInsurance(props) {
                 Name: "",
                 Description: "",
                 Price: 0,
-                Expirationdate: "",
-                Creationdate: "",
-                provider: "",
+                Provider: "",
                 Payout: 0,
                 Automated: false,
             })
@@ -137,7 +123,7 @@ export default function CreateInsurance(props) {
         }
         else {
             const CreateInsuranceOption = async () => {
-                setshowButtons({ ...showButtons,showsavebutton: false })
+                setshowButtons({ ...showButtons, showsavebutton: false })
                 try {
                     const data = await InsuranceService.create(FormValues)
                     console.log("data = ", data)
@@ -146,9 +132,7 @@ export default function CreateInsurance(props) {
                         Name: "",
                         Description: "",
                         Price: 0,
-                        Expirationdate: "",
-                        Creationdate: "",
-                        provider: "",
+                        Provider: "",
                         Payout: 0,
                         Automated: false,
                     })
@@ -223,8 +207,8 @@ export default function CreateInsurance(props) {
                                                 required
                                                 fullWidth
                                                 label="Description"
-                                                name="description"
-                                                autoComplete="description"
+                                                name="Description"
+                                                autoComplete="Description"
                                                 value={FormValues.Description}
                                                 onChange={event => setFormValues({ ...FormValues, Description: event.target.value })}
                                             />
@@ -241,50 +225,6 @@ export default function CreateInsurance(props) {
                                                 onChange={event => setFormValues({ ...FormValues, Description: event.target.value })}
                                             />
                                     }
-                                </Grid>
-                                <Grid item xs={12}>
-                                    <TextField
-                                        variant="outlined"
-                                        required
-                                        fullWidth
-                                        id="Expirationdate"
-                                        label="Expiration date"
-                                        name="Expirationdate"
-                                        autoComplete="Expirationdate"
-                                        type="date"
-                                        InputLabelProps={{
-                                            shrink: true,
-                                        }}
-                                        value={FormValues.Expirationdate}
-                                        onBlur={() => {
-                                            setTouched({ ...touched, Expirationdate: true });
-                                        }}
-                                        onChange={(event) => {
-                                            setFormValues({ ...FormValues, Expirationdate: event.target.value })
-                                        }}
-                                    />
-                                </Grid>
-                                <Grid item xs={12}>
-                                    <TextField
-                                        variant="outlined"
-                                        required
-                                        fullWidth
-                                        id="Creationdate"
-                                        label="Creation date"
-                                        name="Creationdate"
-                                        autoComplete="Creationdate"
-                                        type="date"
-                                        InputLabelProps={{
-                                            shrink: true,
-                                        }}
-                                        value={FormValues.Creationdate}
-                                        onBlur={() => {
-                                            setTouched({ ...touched, Creationdate: true });
-                                        }}
-                                        onChange={(event) => {
-                                            setFormValues({ ...FormValues, Creationdate: event.target.value })
-                                        }}
-                                    />
                                 </Grid>
                                 <Grid item xs={12}>
                                     {
@@ -312,7 +252,7 @@ export default function CreateInsurance(props) {
                                                 type="Provider"
                                                 id="Provider"
                                                 value={FormValues.Provider}
-                                                onBlur={event => setTouched({ ...touched,Provider: true })}
+                                                onBlur={event => setTouched({ ...touched, Provider: true })}
                                                 onChange={event => setFormValues({ ...FormValues, Provider: event.target.value })}
                                             />
                                     }

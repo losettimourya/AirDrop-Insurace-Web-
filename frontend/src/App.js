@@ -36,7 +36,7 @@ export default function App() {
           <Route path="/CreateFlow" element={window.localStorage.getItem('token') ? <CreateFlow user={user} setuser={setuser} /> : <Navigate replace to="/" />} />
           <Route path="/UpdateFlow" element={window.localStorage.getItem('token') ? <UpdateFlow user={user} setuser={setuser} /> : <Navigate replace to="/" />} />
           <Route path="/DeleteFlow" element={window.localStorage.getItem('token') ? <DeleteFlow user={user} setuser={setuser} /> : <Navigate replace to="/" />} />
-          <Route path="/ClaimInsurance" element={window.localStorage.getItem('token') ? <ClaimInsurance user={user} setuser={setuser} /> : <Navigate replace to="/" />} />
+          {/* <Route path="/ClaimInsurance" element={window.localStorage.getItem('token') ? <ClaimInsurance user={user} setuser={setuser} /> : <Navigate replace to="/" />} /> */}
           <Route path="/Wallet" element={window.localStorage.getItem('token') ? <Wallet user={user} setuser={setuser} /> : <Navigate replace to="/" />} />
           <Route path="/VerifyClaim" element={window.localStorage.getItem('token') ? <VerifyClaim user={user} setuser={setuser} /> : <Navigate replace to="/" />} />
           <Route path="/CreateInsurance" element={window.localStorage.getItem('token') ? <CreateInsurance user={user} setuser={setuser} /> : <Navigate replace to="/" />} />

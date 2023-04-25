@@ -55,7 +55,7 @@ export default function Home(props) {
                                     <Button color="inherit" href="/CreateFlow"><AddCircleOutlineIcon style={{ marginRight: "0.5rem" }} />Create Flow</Button>
                                     <Button color="inherit" href="/UpdateFlow"><UpdateIcon style={{ marginRight: "0.5rem" }} />Update Flow</Button>
                                     <Button color="inherit" href="/DeleteFlow"><DeleteIcon style={{ marginRight: "0.5rem" }} />Delete Flow</Button>
-                                    <Button color="inherit" href="/ClaimInsurance"><GetAppIcon style={{ marginRight: "0.5rem" }} />Claim Insurance</Button>
+                                    {/* <Button color="inherit" href="/ClaimInsurance"><GetAppIcon style={{ marginRight: "0.5rem" }} />Claim Insurance</Button> */}
                                     <Button color="inherit" href="/GetTokens"><TokenIcon style={{ marginRight: "0.5rem" }} />Get Tokens</Button>
                                     <Button color="inherit" onClick={handleLogout}><ExitToAppIcon style={{ marginRight: "0.5rem" }} />Logout</Button>
                                 </div>

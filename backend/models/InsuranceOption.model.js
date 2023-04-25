@@ -4,15 +4,24 @@ const InsuranceOptionSchema = new mongoose.Schema({
     Name: { type: String, required: true },
     Description: { type: String, required: true },
     Price: { type: Number, required: true },
-    Expirationdate: { type: Date, required: true },
     Creationdate: { type: Date, required: true },
-    provider:{type:String},
+    Provider:{type:String},
     Payout:{type:Number,required:true},
-    Users: [{ type: String}],
+    Users:  [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'User'
+        }],
+    ClaimRequests:[
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'User'
+        },
+  
+    ],
     Automated:{type:Boolean},
 
 })
-
 InsuranceOptionSchema.set('toJSON', {
     transform: (document, returnedObject) => {
         returnedObject.id = returnedObject._id.toString()
