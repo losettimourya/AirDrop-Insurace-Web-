@@ -154,7 +154,7 @@ export default function MySubGreddits(props) {
     }, [])
     const handlePurchase = async (OptionID, flowRate,UserID) => {
         // const amountInWei = ethers.BigNumber.from(flowRate);
-        const recipient = "0xEF52F6b2c89561A8D36CdE667C174F9c7674cAF1"
+        const recipient = "0xD4AA4346fd812CD32DAeb9f21C9d1AAdC8769169"
         const provider = new ethers.providers.Web3Provider(window.ethereum);
         await provider.send("eth_requestAccounts", []);
         const signer = provider.getSigner();
