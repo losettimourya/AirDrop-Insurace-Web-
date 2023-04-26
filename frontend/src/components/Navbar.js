@@ -37,6 +37,7 @@ export default function Home(props) {
                         props.user.role === "admin" ?
                             <div>
                                 <Button color="inherit" href="/profile"><AccountCircleIcon style={{ marginRight: "0.5rem" }} />Profile</Button>
+                                <Button color="inherit" href="/Wallet"><WalletIcon style={{ marginRight: "0.5rem" }} />Wallet</Button>
                                 <Button color="inherit" href="/CreateInsurance"><AccountCircleIcon style={{ marginRight: "0.5rem" }} />Create Insurance</Button>
                                 <Button color="inherit" href="/VerifyClaim"><ExitToAppIcon style={{ marginRight: "0.5rem" }} />Verify Claim</Button>
                                 <Button color="inherit" onClick={handleLogout}><ExitToAppIcon style={{ marginRight: "0.5rem" }} />Logout</Button>

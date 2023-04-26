@@ -14,6 +14,7 @@ import {
 } from "@mui/material";
 import { ethers } from "ethers";
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import BeachAccessIcon from '@mui/icons-material/BeachAccess';
 import UserService from "../services/Users";
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
@@ -24,6 +25,7 @@ import ClearIcon from '@mui/icons-material/Clear';
 import CardHeader from '@mui/material/CardHeader';
 import CardMedia from '@mui/material/CardMedia';
 import CardContent from '@mui/material/CardContent';
+import UmbrellaIcon from '@mui/icons-material/Umbrella';
 import CardActions from '@mui/material/CardActions';
 import IconButton from '@mui/material/IconButton';
 import { red, green } from '@mui/material/colors';
@@ -266,7 +268,7 @@ export default function MySubGreddits(props) {
                                 <CardHeader
                                     avatar={
                                         <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-                                            <RedditIcon style={{ fontSize: "2rem" }} />
+                                            <BeachAccessIcon style={{ fontSize: "2rem" }} />
                                         </Avatar>
                                     }
                                     title={Option.Name}
