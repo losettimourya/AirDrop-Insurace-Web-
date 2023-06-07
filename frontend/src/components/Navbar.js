@@ -71,3 +71,7 @@ export default function Home(props) {
         </Box>
     )
 }
+
+
+
+The findings indicate that bats might be the origin of SARS-2, while for MERS-CoV, it is plausible that it evolved from a common ancestor, as it has the least resemblance to other spike glycoproteins.
